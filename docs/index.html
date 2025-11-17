@@ -13,7 +13,8 @@
 async function sendTest() {
     const passcode = document.getElementById("code").value;
 
-    const res = await fetch("http://localhost:5001/api/test", {
+    // const res = await fetch("http://localhost:5001/api/test", {
+    const res = await fetch("https://proto-ai-buddy-demo.onrender.com/api/test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ passcode })

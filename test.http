@@ -1,0 +1,18 @@
+###
+
+POST https://proto-ai-buddy-demo.onrender.com/api/test
+Content-Type: application/json
+
+{
+  "passcode": "1234"
+}
+
+###
+
+
+GET https://proto-ai-buddy-demo.onrender.com/api/ping
+Content-Type: application/json
+
+{
+
+}
