@@ -16,6 +16,11 @@ def test():
     else:
         return jsonify({"ok": False, "message": "wrong passcode"})
 
+@app.route("/api/ping", methods=["GET"])
+def ping():
+    return jsonify({"ok": True, "message": "server is running"})
+
+
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
 
