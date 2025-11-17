@@ -1,6 +1,6 @@
 ###
 
-POST https://proto-ai-buddy-demo.onrender.com/api/test
+POST https://proto-ai-buddy-backend.onrender.com/api/test
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 
 
-GET https://proto-ai-buddy-demo.onrender.com/api/ping
+GET https://proto-ai-buddy-backend.onrender.com/api/ping
 Content-Type: application/json
 
 {
