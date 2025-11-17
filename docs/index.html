@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Test Demo</title>
-</head>
 <body>
-  <h1>Demo Test</h1>
 
-  <input type="password" id="secret" placeholder="Enter secret code">
-  <button id="unlock">Unlock</button>
+<h3>Local Plush Backend Test</h3>
 
-  <div id="main" style="display:none;">
-    <button id="recordBtn">Record 1 sec</button>
-    <p id="result"></p>
-  </div>
+<input id="code" placeholder="enter passcode">
+<button onclick="sendTest()">Submit</button>
 
-  <script src="script.js"></script>
+<p id="result"></p>
+
+<script>
+async function sendTest() {
+    const passcode = document.getElementById("code").value;
+
+    const res = await fetch("http://localhost:5001/api/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode })
+    });
+
+    const data = await res.json();
+    document.getElementById("result").textContent = data.message;
+}
+</script>
+
 </body>
 </html>
