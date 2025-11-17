@@ -34,7 +34,13 @@ async function sendTest() {
     });
 
     const data = await res.json();
-    document.getElementById("result").textContent = data.message;
+    // document.getElementById("result").textContent = data.message;
+    if (data.ok) {
+    window.location.href =
+        "https://proto-ai-buddy-backend.onrender.com/app?t=" + passcode;
+    } else {
+        document.getElementById("result").textContent = data.message;
+    }
 }
 
 
