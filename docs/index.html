@@ -10,11 +10,14 @@
 <p id="result"></p>
 
 <script>
+
+const backend = "https://proto-ai-buddy-backend.onrender.com";
+// const backend = "http://localhost:5001";
 async function sendTest() {
     const passcode = document.getElementById("code").value;
     if (!passcode) return alert("Enter passcode");
 
-    const res = await fetch("http://localhost:5001/api/test", {
+    const res = await fetch(backend + "/api/test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ passcode })
@@ -23,7 +26,7 @@ async function sendTest() {
     const data = await res.json();
     if (data.ok) {
         // redirect to backend plush interface
-        window.location.href = "http://localhost:5001/app?t=" + passcode;
+        window.location.href = backend + "/app?t=" + passcode;
     } else {
         document.getElementById("result").textContent = data.message;
     }
