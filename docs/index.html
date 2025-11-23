@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <style>
+    #spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 3px solid #ccc;
+      border-top: 3px solid #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #result {
+      margin-top: 12px;
+      font-weight: 500;
+    }
+  </style>
+</head>
 <body>
 
 <h3>Local Plush Backend Test</h3>
@@ -11,24 +36,41 @@
 
 <script>
 
-const backend = "https://proto-ai-buddy-backend.onrender.com";
-// const backend = "http://localhost:5001";
+// const backend = "https://proto-ai-buddy-backend.onrender.com";
+const backend = "http://localhost:5001";
+
 async function sendTest() {
     const passcode = document.getElementById("code").value;
+    const resultEl = document.getElementById("result");
     if (!passcode) return alert("Enter passcode");
 
-    const res = await fetch(backend + "/api/test", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ passcode })
-    });
+    // Show immediate feedback with spinner
+    resultEl.innerHTML = 'Checking passcode <span id="spinner"></span>';
 
-    const data = await res.json();
-    if (data.ok) {
-        // redirect to backend plush interface
-        window.location.href = backend + "/app?t=" + passcode;
-    } else {
-        document.getElementById("result").textContent = data.message;
+    try {
+        const res = await fetch(backend + "/api/test", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ passcode })
+        });
+
+        if (!res.ok) {
+            resultEl.textContent = `Server error: ${res.status}`;
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.ok) {
+            resultEl.textContent = "Passcode accepted! Redirecting...";
+            window.location.href = backend + "/app?t=" + passcode;
+        } else {
+            resultEl.textContent = data.message || "Passcode rejected";
+        }
+    } catch (err) {
+        // handle fetch/network errors (cold start, no connection, etc.)
+        resultEl.textContent = "Could not connect to server. It may be starting up. Please wait a few seconds and try again.";
+        console.error(err);
     }
 }
 </script>
