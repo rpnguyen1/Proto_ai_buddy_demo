@@ -28,16 +28,19 @@
 <body>
 
 <h3>Local Plush Backend Test</h3>
-
+<p id="instructions">
+  Enter the passcode and press Submit to access the demo. <br>
+</p>
 <input id="code" placeholder="enter passcode">
 <button onclick="sendTest()">Submit</button>
+
 
 <p id="result"></p>
 
 <script>
 
-// const backend = "https://proto-ai-buddy-backend.onrender.com";
-const backend = "http://localhost:5001";
+const backend = "https://proto-ai-buddy-backend.onrender.com";
+// const backend = "http://localhost:5001";
 
 async function sendTest() {
     const passcode = document.getElementById("code").value;
@@ -45,7 +48,9 @@ async function sendTest() {
     if (!passcode) return alert("Enter passcode");
 
     // Show immediate feedback with spinner
-    resultEl.innerHTML = 'Checking passcode <span id="spinner"></span>';
+    resultEl.innerHTML = 'Checking passcode <span id="spinner"></span> \n It could take a few minutes if it has not been used recently.';
+
+    
 
     try {
         const res = await fetch(backend + "/api/test", {
